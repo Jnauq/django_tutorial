@@ -131,3 +131,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Set the template pack for crispy forms
 # https://django-crispy-forms.readthedocs.io/en/latest/install.html
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Redirect after successful login
+LOGIN_REDIRECT_URL = 'blog-home'
+# Redirect url if failed to access login_required route
+LOGIN_URL = 'login'

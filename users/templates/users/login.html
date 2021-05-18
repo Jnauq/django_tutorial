@@ -1,7 +1,7 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h2>Create a new account</h2>
+    <h2>Sign in to you account</h2>
     <div class="content-section">
         <form method="POST">
             {% csrf_token %}
@@ -9,13 +9,13 @@
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Sign Up</button>
+                <button class="btn btn-outline-info" type="submit">Sign In</button>
             </div>
         </form>
         <div class="border-top pt3">
             <small class="text-muted">
-                Already have an account?
-                <a href="{% url 'login' %}" class="ml-2">Sign In</a>
+                Don't have an account?
+                <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
             </small>
         </div>
     </div>
