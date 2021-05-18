@@ -123,6 +123,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Root directory path where Django will store uploaded files
+MEDIA_ROOT = BASE_DIR / 'media'
+# Public url of media directory
+MEDIA_URL = '/media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
