@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.views.generic import (
     ListView,
     DetailView,
@@ -19,17 +20,29 @@ def home(request):
 
 class PostListView(ListView):
     model = Post
-    template_name = 'blog/home.html'    # Assign which template to use in ListView
+    template_name = 'blog/home.html'    # Assign which template to use in ListView  default: <app>/<model>_<list>.html
     context_object_name = 'posts'       # Change var name of object to loop over
     ordering = ['-date_posted']         # Adding - reverses ordering by attribute
+    paginate_by = 5                     # Num posts per page
+
+
+class UserPostListView(ListView):
+    model = Post
+    template_name = 'blog/user_posts.html'      # Assign which template to use in ListView
+    context_object_name = 'posts'               # Change var name of object to loop over
+    paginate_by = 5                             # Num posts per page
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Post.objects.filter(author=user).order_by('-date_posted')
 
 
 class PostDetailView(DetailView):
-    model = Post
+    model = Post                        # Default template: blog/post_detail.html
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
-    model = Post
+    model = Post                        # Default template: blog/post_form.html
     fields = ['title', 'content']
     success_url = '/'
 
@@ -39,7 +52,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Post
+    model = Post                        # Default template: blog/post_form.html
     fields = ['title', 'content']
     success_url = '/'
 
