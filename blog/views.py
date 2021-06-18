@@ -13,6 +13,7 @@ from .models import Post
 
 def home(request):
     context = {
+        'title': 'Home',
         'posts': Post.objects.all()
     }
     return render(request, 'blog/home.html', context)
@@ -24,6 +25,7 @@ class PostListView(ListView):
     context_object_name = 'posts'       # Change var name of object to loop over
     ordering = ['-date_posted']         # Adding - reverses ordering by attribute
     paginate_by = 5                     # Num posts per page
+    extra_context = {'title': 'Home'}   # Add extra content to send to template
 
 
 class UserPostListView(ListView):
